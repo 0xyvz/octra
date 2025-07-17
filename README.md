@@ -1,12 +1,10 @@
-# 🛠️ OCTRA Testnet Kurulum ve Kullanım Rehberi (0'dan Başlayanlar için)
+# 🛠️ OCTRA Testnet Kurulum ve Kullanım Rehberi (Güncel Sürümlerle)
 
-Bu rehber, OCTRA blockchain testnet ortamında cüzdan oluşturmak, token almak ve işlemler yapmak isteyenler için hazırlanmıştır.
+Bu rehber OCTRA testnet ortamında cüzdan oluşturma, test token alma ve işlemleri yapmayı adım adım açıklar.
 
 ---
 
-## 📆 1. Ortam Hazırlığı
-
-> Ubuntu / Debian sistemler için önerilir (WSL dahil)
+## 1. Ortam Hazırlığı
 
 ```bash
 sudo apt update && sudo apt upgrade -y
@@ -15,41 +13,42 @@ sudo apt install git curl wget tmux screen clang jq btop htop -y
 
 ---
 
-## 🔐 2. Cüzdan Oluşturma
+## 2. Cüzdan Oluşturma
 
-### Yöntem 1: Tek Komutla CLI Kurulumu
+### CLI ile Tek Komut Kurulum
 
 ```bash
-bash <(curl -s https://raw.githubusercontent.com/zunxbt/octra-wallet-cli/main/install.sh)
+bash <(curl -s https://raw.githubusercontent.com/octra-labs/octra-wallet-cli/main/install.sh)
 ```
 
-Kurulum sonrası çıkan `privateKey` ve `address` değerlerini bir yere kaydetmeyi unutma.
+Kurulum sonunda ekranda çıkan `privateKey` ve `address` değerlerini mutlaka kaydet.
 
 ---
 
-## 🌐 3. Web Panel ile Cüzdan Kullanımı
+## 3. Web Panel ile Cüzdan Oluşturma
 
 ```bash
-wget https://github.com/zunxbt/wallet-generator/releases/download/1.0.0/wallet-generator-linux-x64
+wget https://github.com/octra-labs/wallet-gen/releases/download/v4/wallet-generator-linux-x64.tar.gz
+tar -xzvf wallet-generator-linux-x64.tar.gz
 chmod +x wallet-generator-linux-x64
 ./wallet-generator-linux-x64
 ```
 
-> Ardından `localhost:8888` adresine tarayıcınızla girerek cüzdan oluşturabilirsiniz.
+Ardından tarayıcıda `http://localhost:8888` adresine girip cüzdan oluşturabilirsin.
 
 ---
 
-## 💧 4. Faucet'ten Test Token Al
+## 4. Faucet'ten Test Token Alma
 
-Oluşturduğunuz cüzdan adresini şu siteye yapıştırarak test token alın:
-🔗 [https://faucet.octra.network/](https://faucet.octra.network/)
+Oluşturduğun cüzdan adresini şu adrese yapıştırarak test token alabilirsin:  
+🔗 https://faucet.octra.network/
 
 ---
 
-## ⚙️ 5. İşlem Aracı Kurulumu (Encrypt, Transfer, Decrypt)
+## 5. İşlem Aracı Kurulumu (Encrypt, Transfer, Decrypt)
 
 ```bash
-git clone https://github.com/zunxbt/octra_pre_client.git
+git clone https://github.com/octra-labs/octra_pre_client.git
 cd octra_pre_client
 chmod +x run.sh
 nano wallet.json
@@ -59,12 +58,17 @@ nano wallet.json
 
 ```json
 {
-  "wallet_address": "senin_adresin",
-  "wallet_private_key": "senin_private_keyin"
+  "priv": "cüzdanprivatekeyiniburayayaz",
+  "addr": "octilebaslayancuzdanadresiniz",
+  "rpc": "https://octra.network"
 }
 ```
 
-### Ardından başlat:
+Dosyayı kendi bilgilerinle doldur ve kaydet.
+
+---
+
+### Ardından aracı çalıştır:
 
 ```bash
 ./run.sh
@@ -72,44 +76,41 @@ nano wallet.json
 
 ---
 
-## ↻ 6. Panel Üzerinden İşlemler
+## 6. Panelde Sunulan İşlemler
 
-Panelde sunulan komutlar:
+- `[4] Encrypt`  
+- `[6] Private Transfer`  
+- `[5] Decrypt`  
+- `[7] Claim`  
 
-* `[4] Encrypt`
-* `[6] Private Transfer`
-* `[5] Decrypt`
-* `[7] Claim`
-
-> Her işlem sonrası explorer'dan kontrol edin:
-> 🔍 [https://explorer.octra.network/](https://explorer.octra.network/)
+İşlem sonrasında her zaman explorer'dan işlem durumunu kontrol et:  
+🔍 https://explorer.octra.network/
 
 ---
 
-## 🧠 7. Screen ile Arka Planda Çalıştırma
+## 7. Screen ile Arka Planda Çalıştırma
 
 ```bash
 screen -S octra
 ./run.sh
 ```
 
-Screen'den çıkmak için: `CTRL+A`, ardından `D`
-Tekrar bağlanmak için:
-
+Screen oturumundan çıkmak için: `CTRL+A`, sonra `D`  
+Yeniden bağlanmak için:  
 ```bash
 screen -r octra
 ```
 
 ---
 
-## ❗ Notlar
+## Notlar
 
-* Sunucu yeniden başlarsa `screen` ile işlemleri tekrar başlatmanız gerekir.
-* Private key’inizi **asla** başkalarıyla paylaşmayın.
+- Private key'ini asla kimseyle paylaşma.  
+- Sunucu yeniden başlarsa `screen` ile işlemi tekrar başlatmayı unutma.
 
 ---
 
-## 🤝 Katkı ve Lisans
+## Katkı ve Lisans
 
-Bu rehber topluluk katkısı ile güncellenmektedir. Katkıda bulunmak isterseniz PR gönderin.
+Bu rehber topluluk katkısı ile güncellenmektedir. Katkıda bulunmak istersen PR gönder.  
 Lisans: MIT
